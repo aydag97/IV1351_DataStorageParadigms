@@ -90,18 +90,15 @@ CREATE TABLE "lease_contract" (
  "instrument_id" INT NOT NULL,
  "start_date" TIMESTAMP(10) NOT NULL,
  "end_date" TIMESTAMP(10) NOT NULL,
- "rental_fee" INT NOT NULL
+ "rental_fee" INT NOT NULL,
+ "lease_policy_id" INT NOT NULL
 );
 
-
-
-CREATE TABLE lease_policy (
- "contract_id" INT NOT NULL,
+CREATE TABLE "lease_policy" (
+ "id" SERIAL PRIMARY KEY,
  "rental_limit" VARCHAR(10) NOT NULL,
  "rental_period" VARCHAR(10) NOT NULL
 );
-
-ALTER TABLE "lease_policy" ADD CONSTRAINT PK_lease_policy PRIMARY KEY (contract_id);
 
 
 
@@ -195,9 +192,8 @@ ALTER TABLE "known_instruments" ADD CONSTRAINT FK_known_instruments_1 FOREIGN KE
 
 ALTER TABLE "lease_contract" ADD CONSTRAINT FK_lease_contract_0 FOREIGN KEY (student_id) REFERENCES "student" ("id") ON DELETE SET NULL;
 ALTER TABLE "lease_contract" ADD CONSTRAINT FK_lease_contract_1 FOREIGN KEY (instrument_id) REFERENCES "instrument" ("id") ON DELETE SET NULL;
+ALTER TABLE "lease_contract" ADD CONSTRAINT FK_lease_contract_2 FOREIGN KEY (lease_policy_id) REFERENCES "lease_policy" ("id") ON DELETE SET NULL;
 
-
-ALTER TABLE "lease_policy" ADD CONSTRAINT FK_lease_policy_0 FOREIGN KEY (contract_id) REFERENCES "lease_contract" ("id") ON DELETE CASCADE;
 
 
 ALTER TABLE "lesson" ADD CONSTRAINT FK_lesson_0 FOREIGN KEY (instructor_id) REFERENCES "instructor" ("id") ON DELETE SET NULL;

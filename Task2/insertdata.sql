@@ -103,15 +103,15 @@ INSERT INTO "instructor" ("employment_id", "can_teach_ensembles", "person_id") V
 
 -- lease contract
 
-INSERT INTO "lease_contract" ("student_id", "instrument_id", "start_date", "end_date", "rental_fee") VALUES
-(1, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'), '2023-11-23 10:40:22', '2024-11-23 10:40:22', 250),
-(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano'), '2023-10-23 10:40:22', '2024-10-23 10:40:22', 300),
-(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin'), '2023-11-23 11:15:09', '2024-11-23 11:15:09', 200);
+INSERT INTO "leas_policy" ("rental_limit", "rental_period") VALUES
+('2', '12');
 
-INSERT INTO "leas_policy" ("contract_id", "rental_limit", "rental_period") VALUES
-(1, '2', '12'),
-(2,'2', '12'),
-(3, '2', '12');
+INSERT INTO "lease_contract" ("student_id", "instrument_id", "start_date", "end_date", "rental_fee", "lease_policy_id") VALUES
+(1, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'), '2023-11-23 10:40:22', '2024-11-23 10:40:22', 250, 1),
+(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano'), '2023-10-23 10:40:22', '2024-10-23 10:40:22', 300, 1),
+(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin'), '2023-11-23 11:15:09', '2024-11-23 11:15:09', 200, 1);
+
+
 
 -- instructor's known instruments
 
