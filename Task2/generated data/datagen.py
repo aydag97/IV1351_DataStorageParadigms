@@ -27,13 +27,11 @@ def save_to_txt(data, file_path):
     with open(file_path, 'w') as file:
         for record in data:
             file.write(" ".join(f"{key}: {value}\n" for key, value in record.items()))
-            file.write("\n")  # Add an empty line between records
+            file.write("\n")  
 
 if __name__ == "__main__":
-    num_records = 20  # Change this to the number of records you want
+    num_records = 20  
     fake_data = generate_fake_data(num_records)
 
-    file_path = 'generated_data.txt'  # Change the file path as needed
+    file_path = 'generated_data.txt'  
     save_to_txt(fake_data, file_path)
-
-    #print(f"Generated data saved to {file_path}")
