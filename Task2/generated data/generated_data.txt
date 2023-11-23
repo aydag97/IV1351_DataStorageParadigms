@@ -1,0 +1,251 @@
+STUDENTS:
+1.
+personal_number: 960130-6021
+ first_name: Margareta
+ last_name: Boman
+ email: margareta.boman@example.com
+ phone_number: +46 (0)196 322 84
+ street_address: Ekgatan 326
+ zip_code: 66590
+ city: Falun
+____________________________________
+2.
+personal_number: 990115-6159
+ first_name: Karl
+ last_name: Jansson
+ email: karl.jansson@example.com
+ phone_number: 08-006 57 57
+ street_address: Skogsvägen 901
+ zip_code: 19957
+ city: Malmö
+_________________________________
+3.
+personal_number: 900116-8088
+ first_name: Lars
+ last_name: Karlsson
+ email: lars.karlsson@example.com
+ phone_number: 08-923 288 15
+ street_address: Industrigränd 95
+ zip_code: 27528
+ city: Kalmar
+____________________________________
+4.
+personal_number: 900608-6632
+ first_name: Ann-Charlotte
+ last_name: Jansson
+ email: ann-charlotte.jansson@example.com
+ phone_number: 0358-17 18 70
+ street_address: Åkervägen 88
+ zip_code: 95689
+ city: Malmö
+_____________________________________
+5.
+personal_number: 050419-8086
+ first_name: Tommy
+ last_name: Karlsson
+ email: tommy.karlsson@example.com
+ phone_number: 08-923 288 15
+ street_address: Industrigränd 95
+ zip_code: 27528
+ city: Kalmar
+____________________________________
+6.
+personal_number: 860416-7497
+ first_name: Emilia
+ last_name: Pettersson
+ email: emilia.pettersson@example.com
+ phone_number: 0831-61 15 24
+ street_address: Parkstigen 02
+ zip_code: 40270
+ city: Kalmar
+_____________________________________
+7.
+personal_number: 840722-8579
+ first_name: Maria
+ last_name: Forsberg
+ email: maria.forsberg@example.com
+ phone_number: 0719-22 56 57
+ street_address: Granvägen 9
+ zip_code: 12591
+ city: Halmstad
+____________________________________
+8.
+personal_number: 820310-2259
+ first_name: Christoffer
+ last_name: Karlsson
+ email: christoffer.karlsson@example.com
+ phone_number: 023-844 94 23
+ street_address: Kvarngatan 9
+ zip_code: 92178
+ city: Trollhättan
+____________________________________
+9.
+personal_number: 811114-8295
+ first_name: Birgitta
+ last_name: Svensson
+ email: birgitta.svensson@example.com
+ phone_number: +46 (0)8 713 009 73
+ street_address: Fabriksgatan 58
+ zip_code: 54169
+ city: Västerås
+_____________________________________
+10.
+personal_number: 811110-3829
+ first_name: Anna
+ last_name: Olsson
+ email: anna.olsson@example.com
+ phone_number: 0765-84 70 58
+ street_address: Parkvägen 974
+ zip_code: 48116
+ city: Malmö
+
+####################################################
+
+SIBLINGS:
+2 & 4 same contact Jansson
+3 & 5 same contact karlsson
+
+###################################################
+ CONTACT PERSON:
+
+1. 
+3 & 5:
+
+personal_number: 421016-3194
+ first_name: Rolf
+ last_name: Karlsson
+ email: rolf.karlsson@example.com
+ phone_number: +46 (0)536 936 41
+ street_address: Åkervägen 11
+ zip_code: 18180
+ city: Karlstad
+
+__________________________________________________
+
+2. 
+2 & 4:
+
+personal_number: 350817-3758
+ first_name: Jenny
+ last_name: Lundmark
+ email: jenny.lundmark@example.com
+ phone_number: 026-96 76 68
+ street_address: Gengränd 16
+ zip_code: 39031
+ city: Södertälje
+_____________________________________________
+3.
+6:
+personal_number: 631220-5005
+ first_name: Michael
+ last_name: Pettersson
+ email: michael.pettersson@example.com
+ phone_number: 08-74 69 52
+ street_address: Idrottsgatan 54
+ zip_code: 16515
+ city: Sandviken
+______________________________________________
+4.
+1:
+personal_number: 540206-4942
+ first_name: Olof
+ last_name: Larsson
+ email: olof.larsson@example.com
+ phone_number: 08-005 31 74
+ street_address: Genvägen 4
+ zip_code: 95315
+ city: Lund
+_____________________________________________
+5.
+7:
+personal_number: 460922-5786
+ first_name: Maria
+ last_name: Gustafsson
+ email: maria.gustafsson@example.com
+ phone_number: 08-132 690 86
+ street_address: Villavägen 9
+ zip_code: 57322
+ city: Stockholm
+______________________________________________
+6.
+8:
+personal_number: 570706-6485
+ first_name: Sven
+ last_name: Holmqvist
+ email: sven.holmqvist@example.com
+ phone_number: +46 (0)8 807 341 82
+ street_address: Idrottsvägen 682
+ zip_code: 67513
+ city: Jönköping
+________________________________________________
+7.
+9:
+personal_number: 531213-0668
+ first_name: Filip
+ last_name: Nyström
+ email: filip.nyström@example.com
+ phone_number: +46 (0)06 62 49 16
+ street_address: Parkstigen 17
+ zip_code: 71009
+ city: Östersund
+__________________________________________________
+8.
+10:
+personal_number: 600202-8535
+ first_name: Anna
+ last_name: Johansson
+ email: anna.johansson@example.com
+ phone_number: 066-915 29 36
+ street_address: Gengatan 3
+ zip_code: 33455
+ city: Luleå
+____________________________________________________
+
+####################################
+INSTRUCTORS:
+
+
+personal_number: 790415-6887
+ first_name: Linnéa
+ last_name: Karlsson
+ email: linnéa.karlsson@example.com
+ phone_number: +46 (0)283 382 91
+ street_address: Idrottsgatan 27
+ zip_code: 49447
+ city: Lidköping
+
+
+personal_number: 810318-0504
+ first_name: Anneli
+ last_name: Wallin
+ email: anneli.wallin@example.com
+ phone_number: 08-46 63 51
+ street_address: Gengränd 388
+ zip_code: 52208
+ city: Karlstad
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
