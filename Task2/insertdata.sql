@@ -9,12 +9,12 @@ INSERT INTO "instrument" ("instrument_name") VALUES
 ('Saxophone');
 
 INSERT INTO "stock" ("type", "brand", "quantity", "instrument_id") VALUES
-('String', 'StringMaster', 10, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')), 
-('Keyboard', 'KeyNote', 6, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')), 
-('Brass', 'BrassCraft', 9, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Trumpet')), 
-('String', 'StringMaster', 7, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin')), 
-('Percussion', 'PercuBeat', 10, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Drum Kit')), 
-('WoodWind', 'WindHarmony', 8, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
+('String', 'StringMaster', 10, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')), 
+('Keyboard', 'KeyNote', 6, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')), 
+('Brass', 'BrassCraft', 9, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Trumpet')), 
+('String', 'StringMaster', 7, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin')), 
+('Percussion', 'PercuBeat', 10, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Drum Kit')), 
+('WoodWind', 'WindHarmony', 8, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
 
 -- skill levels
 
@@ -24,7 +24,7 @@ INSERT INTO "skill_level" ("level") VALUES
 ('Advanced');
 
 -- genres
-INSERT INTO "genres" ("genre_name") VALUES
+INSERT INTO "genre" ("genre_name") VALUES
 ('Pop'),
 ('Blues'),
 ('Country'),
@@ -103,25 +103,25 @@ INSERT INTO "instructor" ("employment_id", "can_teach_ensembles", "person_id") V
 
 -- lease contract
 
-INSERT INTO "leas_policy" ("rental_limit", "rental_period") VALUES
+INSERT INTO "lease_policy" ("rental_limit", "rental_period") VALUES
 ('2', '12');
 
 INSERT INTO "lease_contract" ("student_id", "instrument_id", "start_date", "end_date", "rental_fee", "lease_policy_id") VALUES
-(1, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'), '2023-11-23 10:40:22', '2024-11-23 10:40:22', 250, 1),
-(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano'), '2023-10-23 10:40:22', '2024-10-23 10:40:22', 300, 1),
-(5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin'), '2023-11-23 11:15:09', '2024-11-23 11:15:09', 200, 1);
+(1, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'), '2023-11-23 10:40:22', '2024-11-23 10:40:22', 250, 1),
+(5, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano'), '2023-10-23 10:40:22', '2024-10-23 10:40:22', 300, 1),
+(5, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin'), '2023-11-23 11:15:09', '2024-11-23 11:15:09', 200, 1);
 
 
 
 -- instructor's known instruments
 
 INSERT INTO "known_instrument" ("instructor_id", "instrument_id") VALUES
-(19,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')),
-(19,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin')),
-(19,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')),
-(20,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Trumpet')),
-(20,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Drum Kit')),
-(20,(SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
+(19,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')),
+(19,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Violin')),
+(19,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')),
+(20,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Trumpet')),
+(20,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Drum Kit')),
+(20,(SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
 
 -- lessons
 
@@ -134,12 +134,12 @@ INSERT INTO "lesson" ("start_time", "end_time", "instructor_id", "skill_level_id
 ('2023-11-29 10:00:00', '2023-11-29 11:30:00', 19, 3, 4);
 
 INSERT INTO "individual_lesson" ("lesson_id", "student_id", "instrument_id") VALUES
-(1, 1, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')),
-(2, 6, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
+(1, 1, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar')),
+(2, 6, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Saxophone'));
 
 INSERT INTO "group_lesson" ("lesson_id", "min_students", "max_students", "instrument_id") VALUES
-(3, 3, 5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')),
-(4, 3, 5, (SELECT instrument_id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'));
+(3, 3, 5, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Piano')),
+(4, 3, 5, (SELECT id FROM "instrument" WHERE "instrument_name" ILIKE 'Guitar'));
 
 INSERT INTO "ensembles" ("lesson_id", "min_students", "max_students", "genre_id") VALUES
 (5, 6, 10, (SELECT genre_id FROM "genre" WHERE "genre_name" ILIKE 'Jazz'));
@@ -162,4 +162,4 @@ INSERT INTO "price_scheme" ("lesson_id", "skill_level_id", "price", "valid_from"
 (2, 1, 199.98, '2023-01-01', '2023-12-31', 15),
 (3, 1, 199.98, '2023-01-01', '2023-12-31', 15),
 (4, 2, 199.98, '2023-01-01', '2023-12-31', 15),
-(5, 3, 250.00, '2023-01-01', '2023-12-31', 15),
+(5, 3, 250.00, '2023-01-01', '2023-12-31', 15);
