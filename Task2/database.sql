@@ -4,12 +4,23 @@ CREATE TABLE "genre" (
 );
 
 
-
 CREATE TABLE "instrument" (
  "id" SERIAL PRIMARY KEY,
  "instrument_name" VARCHAR(500) NOT NULL
 );
 
+
+CREATE TABLE "lease_policy" (
+ "id" SERIAL PRIMARY KEY,
+ "rental_limit" VARCHAR(500) NOT NULL,
+ "rental_period" VARCHAR(500) NOT NULL
+);
+
+
+CREATE TABLE lesson_type (
+ "id" SERIAL PRIMARY KEY,
+ "type" VARCHAR(500) NOT NULL
+);
 
 
 CREATE TABLE "person" (
@@ -25,7 +36,6 @@ CREATE TABLE "person" (
 );
 
 
-
 CREATE TABLE "room" (
  "id" SERIAL PRIMARY KEY,
  "room_name" VARCHAR(200) NOT NULL
@@ -39,40 +49,29 @@ CREATE TABLE "skill_level" (
 );
 
 
-
-
 CREATE TABLE "stock" (
  "id" SERIAL PRIMARY KEY,
+ "instrument_id" INT NOT NULL REFERENCES "instrument" ON DELETE SET NULL,
  "type" VARCHAR(100) NOT NULL,
  "brand" VARCHAR(100) NOT NULL,
  "quantity" INT NOT NULL,
- "instrument_id" INT NOT NULL REFERENCES "instrument" ON DELETE SET NULL
+ "cost" INT NOT NULL
 );
 
 
 
 CREATE TABLE "student" (
  "id" SERIAL PRIMARY KEY,
- "person_id" INT NOT NULL REFERENCES "person",
- "has_sibling" BOOLEAN NOT NULL
-);
-
-CREATE TABLE "sibling" (
- "sibling_id" SERIAL ,
- "student_id" INT NOT NULL REFERENCES "student" ON DELETE CASCADE,
- PRIMARY KEY("sibling_id", "student_id")
+ "person_id" INT NOT NULL REFERENCES "person"
 );
 
 
 CREATE TABLE "contact_person" (
  "id" SERIAL,
  "student_id" INT NOT NULL REFERENCES "student" ON DELETE CASCADE,
- "relationship" VARCHAR(100) NOT NULL,
  "person_id" INT NOT NULL REFERENCES "person",
  PRIMARY KEY ("id","student_id")
 );
-
-
 
 CREATE TABLE "instructor" (
  "id" SERIAL PRIMARY KEY,
@@ -89,32 +88,44 @@ CREATE TABLE "known_instruments" (
 );
 
 
-
-CREATE TABLE "lease_policy" (
- "id" SERIAL PRIMARY KEY,
- "rental_limit" VARCHAR(500) NOT NULL,
- "rental_period" VARCHAR(500) NOT NULL
-);
-
 CREATE TABLE "lease_contract" (
  "id" SERIAL PRIMARY KEY,
  "student_id" INT NOT NULL REFERENCES "student" ON DELETE SET NULL,
- "instrument_id" INT NOT NULL REFERENCES "instrument" ON DELETE SET NULL,
+ "stock_id" INT NOT NULL REFERENCES "stock" ON DELETE SET NULL,
  "start_date" TIMESTAMP(6) NOT NULL,
  "end_date" TIMESTAMP(6) NOT NULL,
- "rental_fee" INT NOT NULL,
  "lease_policy_id" INT NOT NULL REFERENCES "lease_policy" ON DELETE SET NULL
 );
 
 
+CREATE TABLE "price_scheme" (
+ "id" SERIAL PRIMARY KEY,
+ "skill_level_id" INT NOT NULL REFERENCES "skill_level" ON DELETE SET NULL,
+ "lesson_type_id" INT NOT NULL REFERENCES "lesson_type" ON DELETE SET NULL,
+ "price" DOUBLE PRECISION NOT NULL,
+ "valid_from" TIMESTAMP(6) NOT NULL,
+ "valid_to" TIMESTAMP(6) NOT NULL,
+ "discount_rate" INT
+);
 
-CREATE TABLE "lesson" (
+
+
+CREATE TABLE sibling (
+ "student_id" INT NOT NULL REFERENCES "student" ON DELETE CASCADE,
+ "sibling_student_id" INT NOT NULL REFERENCES "student" ON DELETE CASCADE,
+ PRIMARY KEY("student_id", "sibling_student_id")
+);
+
+
+
+CREATE TABLE lesson (
  "id"  SERIAL PRIMARY KEY,
  "start_time" TIMESTAMP(6) NOT NULL,
  "end_time" TIMESTAMP(6) NOT NULL,
  "instructor_id" INT NOT NULL REFERENCES "instructor" ON DELETE SET NULL,
  "skill_level_id" INT NOT NULL REFERENCES "skill_level" ON DELETE SET NULL,
- "room_id" INT NOT NULL REFERENCES "room" ON DELETE SET NULL
+ "room_id" INT NOT NULL REFERENCES "room" ON DELETE SET NULL,
+ "price_scheme_id" INT NOT NULL REFERENCES "price_scheme" ON DELETE SET NULL
 );
 
 
@@ -124,19 +135,6 @@ CREATE TABLE "lesson_booking" (
  "lesson_id"  INT NOT NULL REFERENCES "lesson" ON DELETE CASCADE,
  PRIMARY KEY("student_id", "lesson_id")
 );
-
-
-
-CREATE TABLE "price_scheme" (
- "id" SERIAL PRIMARY KEY,
- "lesson_id"  INT NOT NULL REFERENCES "lesson" ON DELETE SET NULL,
- "skill_level_id" INT NOT NULL REFERENCES "skill_level" ON DELETE SET NULL,
- "price" DOUBLE PRECISION NOT NULL,
- "valid_from" TIMESTAMP(6) NOT NULL,
- "valid_to" TIMESTAMP(6) NOT NULL,
- "discount_rate" INT
-);
-
 
 
 CREATE TABLE "ensembles" (
@@ -149,7 +147,6 @@ CREATE TABLE "ensembles" (
 );
 
 
-
 CREATE TABLE "group_lesson" (
  "group_lesson_id" SERIAL,
  "lesson_id"  INT NOT NULL REFERENCES "lesson" ON DELETE CASCADE,
@@ -160,7 +157,6 @@ CREATE TABLE "group_lesson" (
 );
 
 
-
 CREATE TABLE "individual_lesson" (
  "individual_lesson_id" SERIAL,
  "lesson_id"  INT NOT NULL REFERENCES "lesson" ON DELETE CASCADE,
@@ -168,7 +164,3 @@ CREATE TABLE "individual_lesson" (
  "instrument_id" INT NOT NULL REFERENCES "instrument" ON DELETE CASCADE,
  PRIMARY KEY("individual_lesson_id", "lesson_id")
 );
-
-
-
-
