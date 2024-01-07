@@ -1,59 +1,38 @@
--- insert the retrieved data into historical db
 
-INSERT INTO "historical_records" ("lesson_type", "genre", "instrument", "lesson_price", "student_first_name", "student_last_name", "student_email") VALUES
+-- A record of all students
+INSERT INTO "student" ("id", "person_number", "first_name", "last_name", "email", "phone", "street", "zip", "city")
+SELECT "id", "person_number", "first_name", "last_name", "email", "phone", "street", "zip", "city"
+FROM dblink('dbname=SoundGoodSchool user=postgres password=Aida97',
+'SELECT student."id", "person_number", "first_name", "last_name", "email", "phone", "street", "zip", "city"
+FROM
+"student" LEFT JOIN "person" ON person.id = student.person_id;')
+AS "student" ("id" INT, "person_number" VARCHAR(20), "first_name" VARCHAR(200), "last_name" VARCHAR(200), "email" VARCHAR(200), 
+                "phone" VARCHAR(20), "street" VARCHAR(200), "zip" VARCHAR(50), "city" VARCHAR(200));
 
-('Individual',''	, 	'Flute',	199.98,	'Hans',	'Holmqvist',	'hans.holm@example.com'),
-('Individual',''	,	'Guitar',	199.98,	'Andreas',	'Johansson'	,'andreas.johansson@example.com'),
-('Individual',''	,	'Drums'	,199.98	,'Linnea'	,'Gustavsson'	,'linnea.gustavsson@example.com'),
-('Individual',''	,	'Violin'	,259.98	,'Sune'	,'Jansson',	'sune.jansson@example.com'),
-('Individual',''	,	'Guitar',	199.98,	'Niklas',	'Gustafsson',	'niklas.gustafsson@example.com'),
+-- A record of all given lessons 
 
-('Group', '' ,		'Piano'	, 220,	'Anders',	'Eriksson'	,'anders.eriksson@example.com'),
-('Group', '',		'Piano'	,220	,'Sara'	,'Olsson',	'sara.olsson@example.com'),
-('Group',	'',	'Piano'	,220	,'Mattias'	,'Olsson'	,'mattias.olsson@example.com'),
-('Group',''	,	'Piano'	,220	,'Ingrid'	,'Olofsson',	'ingrid.olofsson@example.com'),
-('Group',''	,	'Piano'	,220	,'Siv'	,'Karlsson',	'siv.karlsson@example.com'),
-('Group',''	,	'Clarinet'	,265	,'Andreas',	'Persson',	'andreas.persson@example.com'),
-('Group',''	,	'Clarinet'	,265	,'Allan',	'Hansen'	,'allan.hansen@example.com'),
-('Group',''	,	'Clarinet',	265	,'Anneli',	'Vikström',	'anneli.vikström@example.com'),
-('Group',''	,	'Clarinet'	,265	,'Erika'	,'Persson',	'erika.persson@example.com'),
-('Group',''	,	'Clarinet'	,265	,'Olof',	'Lindgren'	,'olof.lindgren@example.com'),
-('Group',''	,	'Violin',	220	,'Tomas',	'Svensson',	'tomas.svensson@example.com'),
-('Group',''	,	'Violin',	220	,'Gustaf',	'Lindén',	'gustaf.lindén@example.com'),
-('Group',''	,	'Violin',	220	,'Josef',	'Eriksson',	'josef.eriksson@example.com'),
-('Group',''	,	'Violin',	220	,'Jennie',	'Sandström'	,'jennie.sandström@example.com'),
-('Group',''	,	'Violin',	220,	'Tage',	'Nilsson',	'tage.nilsson@example.com'),
-('Group',''	,	'Drums'	,220	,'Carl'	,'Lindgren',	'carl.lindgren@example.com'),
-('Group',''	,	'Drums'	,220	,'Inger'	,'Norberg'	,'inger.norberg@example.com'),
-('Group',''	,	'Drums', 220,	'Kjell',	'Lindholm',	'kjell.lindholm@example.com'),
-('Group',''	,	'Drums'	,220	,'Cecilia'	,'Karlsson'	,'cecilia.karlsson@example.com'),
-('Group',''	,	'Drums'	,220	,'Hillevi'	,'Lundberg',	'hillevi.lundberg@example.com'),
-('Group',''	,   'Flute'	,265	,'Per',	'Lindberg',	'per.lindberg@example.com'),
-('Group',''	,	'Flute',	265	,'Victor',	'Andersson'	,'victor.andersson@example.com'),
-('Group',''	,	'Flute',	265	,'Margareta',	'Melin',	'margareta.melin@example.com'),
+INSERT INTO "lesson" ("id", "lesson_type", "level", "genre", "instrument", "price", "start_time")
+SELECT "id", "lesson_type", "level", "genre", "instrument", "price", "start_time"
+FROM dblink('dbname=SoundGoodSchool user=postgres password=Aida97',
+'SELECT lesson."id", lt.type AS lesson_type, sl.level AS level, gr.genre_name AS genre, ins.instrument_name AS instrument,
+ps.price AS price, start_time
+FROM 
+lesson 
+LEFT JOIN price_scheme ps ON lesson.price_scheme_id = ps.id
+LEFT JOIN lesson_type lt ON ps.lesson_type_id = lt.id
+LEFT JOIN skill_level sl ON ps.skill_level_id = sl.id
+LEFT JOIN ensembles e ON lesson.id = e.lesson_id
+LEFT JOIN genre gr ON e.genre_id = gr.genre_id
+LEFT JOIN group_lesson gl ON lesson.id = gl.lesson_id
+LEFT JOIN individual_lesson il ON lesson.id = il.lesson_id
+LEFT JOIN instrument ins ON COALESCE(gl.instrument_id , il.instrument_id) = ins.id;')
+AS "lesson" ("id" INT, "lesson_type" VARCHAR(500), "level" VARCHAR(100), "genre" VARCHAR(500), 
+            "instrument" VARCHAR(500), "price" DOUBLE PRECISION, "start_time" TIMESTAMP(6));
 
-('Ensemble', 'Jazz'	,'',	249.98,	'Andreas'	,'Persson'	,'andreas.persson@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Erik',	'Johansson',	'erik.johan@example.com'),
-('Ensemble',	'Jazz'	, '' ,	249.98,	'Siv',	'Karlsson',	'siv.karlsson@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Olof'	,'Lindgren',	'olof.lindgren@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Lars',	'Fransson',	'lars.fransson@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Olof'	,'Pettersson',	'olof.pettersson@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Jennie',	'Sandström'	,'jennie.sandström@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Anneli','Vikström'	,'anneli.vikström@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Holger'	,'Olsson'	,'holger.olsson@example.com'),
-('Ensemble',	'Jazz'	,'',	249.98	,'Ester'	,'Karlsson',	'ester.karlsson@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Birgit'	,'Gustafsson'	,'birgit.gustafsson@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Cecilia'	,'Karlsson'	,'cecilia.karlsson@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Malin'	,'Pettersson',	'malin.pettersson@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Kjell',	'Lindholm'	,'kjell.lindholm@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Inger'	,'Norberg',	'inger.norberg@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Carl',	'Lindgren',	'carl.lindgren@example.com'),
-('Ensemble',	'Rock'	,'',	249.98	,'Hillevi'	,'Lundberg',	'hillevi.lundberg@example.com'),
-('Ensemble',	'Blues'	,'',	249.98	,'Inger',	'Norberg'	,'inger.norberg@example.com'),
-('Ensemble',	'Blues'	,'',	249.98	,'Carl'	,'Lindgren'	,'carl.lindgren@example.com'),
-('Ensemble',	'Blues'	,'',	249.98	,'Hillevi',	'Lundberg',	'hillevi.lundberg@example.com'),
-('Ensemble',	'Blues'	,'',	249.98	,'Cecilia'	,'Karlsson',	'cecilia.karlsson@example.com'),
-('Ensemble',	'Blues'	,'',	249.98	,'Kjell'	,'Lindholm'	,'kjell.lindholm@example.com'),
-('Ensemble',	'Jazz'	,'',	270	,'Tobias'	,'Bengtsson',	'tobias.bengtsson@example.com'),
-('Ensemble',	'Jazz'	,'',	270	,'Vilhelm'	,'Axelsson'	,'vilhelm.axelsson@example.com'),
-('Ensemble',	'Country','',		249.98	,'Karl'	,'Svensson'	,'karl.svensson@example.com');
+-- A record of lesson bookings; showing which student booked which lesson
+INSERT INTO "booking" ("student_id", "lesson_id")
+SELECT "student_id", "lesson_id"
+FROM dblink('dbname=SoundGoodSchool user=postgres password=Aida97',
+'SELECT student_id, lesson_id
+FROM lesson_booking; ')
+AS "booking" ("student_id" INT, "lesson_id" INT);
